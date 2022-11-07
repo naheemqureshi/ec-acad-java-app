@@ -12,4 +12,4 @@ public class HelloworldApplication {
 		SpringApplication.run(HelloworldApplication.class, args);
 		System.out.println("spring boot application");
 	}
-   }
+}
