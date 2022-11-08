@@ -11,7 +11,8 @@ pipeline {
      IMAGE_REPO_NAME="ec-acad-01-java-app"
      IMAGE_TAG="${env.BUILD_ID}"
      REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-     registryCredential = 'ec-acad-dev-credentials'
+     registryCredentialDev = 'ec-acad-dev-credentials'
+     registryCredentialTest = 'ec-acad-test-credentials'
      dockerImage = ''
     }
     
@@ -22,7 +23,7 @@ pipeline {
     stages {
 
     // Maven build and Unit Tests
-    stage('Unit Tests') {
+    stage('Build & Unit Tests') {
       steps{
         script {
           sh 'mvn -B clean package'
@@ -37,8 +38,8 @@ pipeline {
         }
       }
     }
-	//Deploy image to AWS ECR   
-       stage('Deploy image') {
+	//Push image to AWS ECR   
+       stage('Push image to AWS ECR') {
         steps{
             script{
                 docker.withRegistry("https://" + REPOSITORY_URI, "ecr:eu-west-2:" + registryCredential) {
@@ -60,10 +61,10 @@ pipeline {
       }
     }
 	   
-         //Deploy
+         //Deploying Image to Dev ECS
      stage('Deploy') {
      steps{
-            withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
+            withAWS(credentials: registryCredentialDev, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			sh "chmod +x ./script.sh"
 			sh './script.sh'
@@ -72,5 +73,18 @@ pipeline {
         }
       } 	   
 
+               //Deploying Image to Test ECS
+     stage('Deploy') {
+     steps{
+            withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
+                script {
+			input id: 'Choice', message: 'Deploy image to Test?', parameters: [choice(choices: ['No', 'Yes'], name: 'Yes or No')]
+			sh "chmod +x ./script.sh"
+			sh './script.sh'
+                }
+            } 
+        }
+      } 
+	    
 }
 }
