@@ -78,7 +78,7 @@ pipeline {
      steps{
             withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
                 script {
-			input id: 'Choice', message: 'Deploy image to Test?', parameters: [choice(choices: ['No', 'Yes'], name: 'Yes or No')]
+			input id: 'Choice', message: 'Deploy image to Test?', name: 'Yes or No')]
 			sh "chmod +x ./script.sh"
 			sh './script.sh'
                 }
