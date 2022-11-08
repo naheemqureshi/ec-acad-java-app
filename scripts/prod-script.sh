@@ -7,11 +7,11 @@ echo "FAMILY= " $FAMILY
 NAME=`aws ecs describe-task-definition --task-definition "${TASK_DEFINITION_NAME}" --region "${AWS_DEFAULT_REGION}" | jq .taskDefinition.containerDefinitions[].name`
 echo "NAME= " $NAME
 
-sed -i "s#BUILD_NUMBER#$IMAGE_TAG#g" prod-task-definition.json
-sed -i "s#REPOSITORY_URI#$REPOSITORY_URI#g" prod-task-definition.json
-sed -i "s#ROLE_ARN#$ROLE_ARN#g" prod-task-definition.json
-sed -i "s#FAMILY#$FAMILY#g" prod-task-definition.json
-sed -i "s#NAME#$NAME#g" prod-task-definition.json
+sed -i "s#BUILD_NUMBER#$IMAGE_TAG#g" ./scripts/prod-task-definition.json
+sed -i "s#REPOSITORY_URI#$REPOSITORY_URI#g" ./scripts/prod-task-definition.json
+sed -i "s#ROLE_ARN#$ROLE_ARN#g" ./scripts/prod-task-definition.json
+sed -i "s#FAMILY#$FAMILY#g" ./scripts/prod-task-definition.json
+sed -i "s#NAME#$NAME#g" ./scripts/prod-task-definition.json
 
 
 aws ecs register-task-definition --cli-input-json file://scripts/prod-task-definition.json --region="${AWS_DEFAULT_REGION}"
