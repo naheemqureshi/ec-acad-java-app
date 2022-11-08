@@ -13,6 +13,8 @@ pipeline {
      REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
      registryCredentialDev = 'ec-acad-dev-credentials'
      registryCredentialTest = 'ec-acad-test-credentials'
+     registryCredentialStage = 'ec-acad-stage-credentials'
+     registryCredentialProd = 'ec-acad-prod-credentials'
      dockerImage = ''
     }
     
@@ -89,7 +91,7 @@ pipeline {
      //Deploying Image to Staging ECS
      stage('Deploy to Staging') {
      steps{
-            withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
+            withAWS(credentials: registryCredentialStage, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			input id: 'Choice', message: 'Deploy image to Staging?'
 			sh "chmod +x ./scripts/stage-script.sh"
@@ -102,7 +104,7 @@ pipeline {
      //Deploying Image to Prod ECS
      stage('Deploy to Prod') {
      steps{
-            withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
+            withAWS(credentials: registryCredentialProd, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			input id: 'Choice', message: 'Deploy image to Prod?'
 			sh "chmod +x ./scripts/stage-script.sh"
