@@ -85,6 +85,31 @@ pipeline {
             } 
         }
       } 
-	    
+
+     //Deploying Image to Staging ECS
+     stage('Deploy to Staging') {
+     steps{
+            withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
+                script {
+			input id: 'Choice', message: 'Deploy image to Staging?'
+			sh "chmod +x ./scripts/stage-script.sh"
+			sh './scripts/stage-script.sh'
+                }
+            } 
+        }
+      } 
+
+     //Deploying Image to Prod ECS
+     stage('Deploy to Prod') {
+     steps{
+            withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
+                script {
+			input id: 'Choice', message: 'Deploy image to Prod?'
+			sh "chmod +x ./scripts/stage-script.sh"
+			sh './scripts/stage-script.sh'
+                }
+            } 
+        }
+      } 
 }
 }
