@@ -107,8 +107,8 @@ pipeline {
             withAWS(credentials: registryCredentialProd, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			input id: 'Choice', message: 'Deploy image to Prod?'
-			sh "chmod +x ./scripts/stage-script.sh"
-			sh './scripts/stage-script.sh'
+			sh "chmod +x ./scripts/prod-script.sh"
+			sh './scripts/prod-script.sh'
                 }
             } 
         }
