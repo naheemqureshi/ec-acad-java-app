@@ -67,7 +67,7 @@ pipeline {
             withAWS(credentials: registryCredentialDev, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			sh "chmod +x ./scripts/dev-script.sh"
-			sh './script.sh'
+			sh './scripts/dev-script.sh'
                 }
             } 
         }
@@ -80,7 +80,7 @@ pipeline {
                 script {
 			input id: 'Choice', message: 'Deploy image to Test?'
 			sh "chmod +x ./scripts/test-script.sh"
-			sh './script2.sh'
+			sh './scripts/dev-script.sh'
                 }
             } 
         }
