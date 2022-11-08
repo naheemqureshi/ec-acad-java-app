@@ -80,7 +80,7 @@ pipeline {
                 script {
 			input id: 'Choice', message: 'Deploy image to Test?'
 			sh "chmod +x ./scripts/test-script.sh"
-			sh './scripts/dev-script.sh'
+			sh './scripts/test-script.sh'
                 }
             } 
         }
