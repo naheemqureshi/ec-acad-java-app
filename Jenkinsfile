@@ -62,7 +62,7 @@ pipeline {
     }
 	   
          //Deploying Image to Dev ECS
-     stage('Deploy') {
+     stage('Deploy to Dev') {
      steps{
             withAWS(credentials: registryCredentialDev, region: "${AWS_DEFAULT_REGION}") {
                 script {
@@ -74,7 +74,7 @@ pipeline {
       } 	   
 
                //Deploying Image to Test ECS
-     stage('Deploy') {
+     stage('Deploy to Test') {
      steps{
             withAWS(credentials: registryCredentialTest, region: "${AWS_DEFAULT_REGION}") {
                 script {
