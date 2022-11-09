@@ -36,7 +36,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build "ec-acad-01-java-app:${env.BUILD_ID}"
+          dockerImage = docker.build "ec-acad-be-app10:${env.BUILD_ID}"
         }
       }
     }
