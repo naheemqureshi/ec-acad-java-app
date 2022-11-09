@@ -35,8 +35,16 @@ Deploys the application as a container based on the image stored in ECR using th
 
 **Buidling Image**: Builds local Docker image in Jenkins workspace from build artifact
 
-**Pushing Image to ECR**: Pushes built image to ECR
+**Push Image to ECR**: Pushes built image to ECR
 
 **Image Cleanup**: Removes all local images created by Docker locally
 
-**Deploying Image**: Deploys image to ECS cluster service from ECR image
+**Deploy to Deve**: Deploys image to ECS cluster in the Dev environment from the ECR image
+
+**Deploy to Teste**: Deploys image to ECS cluster in the Test environment from the ECR image
+
+**Deploy to Stagee**: Deploys image to ECS cluster in the Staging environment from the ECR image
+
+**Deploy to Prode**: Deploys image to ECS cluster in the Prod environment from the ECR image
+
+
